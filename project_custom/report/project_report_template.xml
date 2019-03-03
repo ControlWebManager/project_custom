@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="project_report">
+
+            <t t-set="foo" t-value="42"/>
+                <t t-log="foo"/>
+
+                <div class="page">
+                    <t t-foreach="docs" t-as="t" >
+                        <span t-esc="t.name"/>
+                    </t>
+               </div>
+        </template>
+
+        <report
+            id="report_project_action"
+            model="project.project"
+            name="project_custom.project_report"
+            string="List the Project"
+            report_type="qweb-html"/>
+    </data>
+</odoo>

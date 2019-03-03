@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Eficent Business and IT Consulting Services S.L.
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <template id="task_report">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+               <div class="page">
+
+                        <center>
+                            <h2>
+
+                            </h2>
+                        </center>
+                       <table class="table table-bordered o_list_view table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width: 315px;">Actividad/Tarea</th>
+                                    <th style="width: 150px;">Proyecto</th>
+                                    <th style="width: 150px;">Asignado a:</th>
+                                    <th style="width:100px;">Inicio</th>
+                                    <th style="width:100px;">Fecha Límite</th>
+                                    <th style="width:100px;">Logrado</th>
+                                    <th style="width:120px;">Fase</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="docs" t-as="o">
+                                <tr>
+                                    <td><span t-field="o.name"/></td>
+                                    <td><span t-field="o.project_id.name"/></td>
+                                    <td ><span t-field="o.user_id.name"/></td>
+                                    <td ><span t-field="o.date_start_custom"/></td>
+                                    <td ><span t-field="o.date_deadline"/></td>
+                                    <td ><span t-field="o.date_end_custom"/></td>
+                                    <td ><span t-field="o.stage_id"/></td>
+
+                                </tr>
+                                </t>
+                            </tbody>
+                   </table>
+
+               </div>
+            </t>
+        </t>
+    </template>
+
+    <report
+        id="report_project_task_action"
+        model="project.task"
+        name="project_custom.task_report"
+        string="Print Task"
+        report_type="qweb-html"/>
+
+</odoo>

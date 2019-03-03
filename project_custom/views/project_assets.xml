@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <template id="assets_backend_extend" name="project assets extend" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/project_custom/static/src/css/project_extend.css"/>
+            </xpath>
+        </template>
+</odoo>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="prject_task_developer_view" model="ir.ui.view">
+            <field name="name">project.tas.developer_view</field>
+            <field name="model">project.task</field>
+            <field name="view_mode">form</field>
+            <field name="arch" type="xml">
+                <form>
+                </form>
+            </field>
+        </record>
+
+
+
+    </data>
+
+</odoo>

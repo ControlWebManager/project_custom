@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="quick_create_task_form_extend_project" model="ir.ui.view">
+            <field name="name">project.task.form.quick_create.extend.project</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.quick_create_task_form" />
+            <field eval="999" name="priority"/>
+            <field name="arch" type="xml">
+                <field name="user_id" position="after">
+                    <field name="date_start_custom" widget="date"/>
+                    <field name="date_deadline"/>
+                    <field name="date_end_custom" widget="date"/>
+                    <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_task_kanban_extend_project" model="ir.ui.view">
+            <field name="name">project.task.view_task_kanban.extend.project</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//t[@t-name='kanban-box']//field[@name='activity_ids']" position="after">
+                    <span t-attf-class="#{green || ''}">Parent<i> <field name="subtask_count" attrs="{'invisible':[('subtask_count', '=', 0)]}"/></i></span>
+
+                </xpath>
+            </field>
+         </record>
+
+        <record id="view_task_tree2_extend_project" model="ir.ui.view">
+            <field name="name">project.task.tree.extend.project</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_tree2"/>
+            <field eval="2" name="priority"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+			        <attribute name="class">project_view_tree</attribute>
+		        </xpath>
+                <field name="user_id" position="after">
+                    <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
+                    <field name="create_date" widget="date" options="{'format': 'dd/MM/yyyy'}"/>
+                    <field name="date_start_custom"/>
+                    <field name="date_deadline" invisible="context.get('deadline_visible',False)"/>
+                    <field name="date_end_custom"/>
+                    <field name="kanban_state" widget="state_selection"/>
+                    <field name="status_record_task" invisible="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_task_tree2_extend_project2" model="ir.ui.view">
+            <field name="name">project.task.tree.extend.project2</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="view_task_tree2_extend_project"/>
+            <field eval="2" name="priority"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='create_date']" position="attributes">
+                    <attribute name="string">Creada</attribute>
+                </xpath>
+                <xpath expr="//field[@name='kanban_state']" position="attributes">
+                    <attribute name="string">St</attribute>
+                </xpath>
+                <xpath expr="//tree" position="attributes">
+			        <attribute name="decoration-warning">status_record_task=="warning"</attribute>
+                    <attribute name="decoration-danger">status_record_task=="danger"</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_task_form2_extend_project" model="ir.ui.view">
+            <field name="name">project.task.form.view_task_form2.extend.project</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2" />
+            <field name="arch" type="xml">
+                <field name="date_deadline" position="before">
+                    <field name="date_start_custom" widget="date"/>
+                </field>
+                <field name="date_deadline" position="after">
+                    <field name="date_end_custom" widget="date"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_task_tree_print_2" model="ir.ui.view">
+            <field name="name">project.task.tree_print2</field>
+            <field name="model">project.task</field>
+            <field eval="3" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Tasks For Print">
+                    <field name="name"/>
+                    <field name="project_id" invisible="1"/>
+                    <field name="user_id" />
+                    <field name="date_deadline" />
+                    <field name="stage_id" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_code_testing" model="ir.actions.server">
+            <field name="name">Code Testing</field>
+            <field name="condition">True</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="project_custom.model_project_task" />
+            <field name="state">code</field>
+            <field name="code">
+                action = model._compute_test_code()
+            </field>
+        </record>
+
+        <record id="action_code_testing3" model="ir.actions.server">
+            <field name="name">Code Testing3</field>
+            <field name="condition">True</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="project_custom.model_project_task" />
+            <field name="code">
+                action = model._computetest_code()
+            </field>
+        </record>
+
+        <record id="action_developer_view" model="ir.actions.act_url">
+            <field name="name">Link to View</field>
+            <field name="type">ir.actions.act_url</field>
+            <field name="target">self</field>
+            <field name="url"></field>
+        </record>
+
+        <menuitem id="menu_project_custom" name="Custom Code"
+                sequence="2" parent="project.menu_main_pm"/>
+
+        <menuitem id="menu_project_custom_test" name="Testing Code"
+                sequence="4" parent="menu_project_custom" action="action_code_testing"/>
+
+        <menuitem id="menu_project_developer_view" name="View en Desarrollo"
+                sequence="3" parent="menu_project_custom" action="action_developer_view"/>
+
+    </data>
+</odoo>

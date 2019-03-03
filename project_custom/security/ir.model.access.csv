@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_view_tree_extend,project.view_extend_tree,model_project_view_extend_tree,project.group_project_user,1,1,1,1
